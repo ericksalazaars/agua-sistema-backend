@@ -1,13 +1,18 @@
 import express from "express";
 import cors from "cors";
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
-
-const app = express();
-app.use(cors());
-app.use(express.json());
+import Database from "better-sqlite3";
+const db = new Database("./database.db");
 
 // ---- DATABASE ----
+
+db.prepare(`CREATE TABLE IF NOT EXISTS clientes (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre TEXT,
+  telefono TEXT,
+  direccion TEXT,
+  precio_fardo REAL,
+  precio_botellon REAL
+)`).run();
 let db;
 
 async function initDB() {
